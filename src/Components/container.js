@@ -27,11 +27,16 @@ const Container = (props) => {
 
   const getNewData = async () => {
     setloading(true)
-    const response = await fetch(`https://openlibrary.org/search.json?q=${query}&limit=10&page=1`);
-    const BooksData = await response.json()
-    setdata(BooksData?.docs)
-    localStorage.setItem('BooksData', JSON.stringify(BooksData))
-    localStorage.setItem('query', query)
+    try {
+      const response = await fetch(`https://openlibrary.org/search.json?q=${query}&limit=10&page=1`);
+      const BooksData = await response.json()
+      setdata(BooksData?.docs)
+      localStorage.setItem('BooksData', JSON.stringify(BooksData))
+      localStorage.setItem('query', query)
+    } catch (error) {
+      console.log(error)
+    }
+  
     setloading(false)
   }
 
